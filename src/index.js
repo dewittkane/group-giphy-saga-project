@@ -54,9 +54,25 @@ function* fetchCategories(){
     }
 }
 
+    function* favGifs(action){
+        try{
+            let response = yield axios.post('/api/favorite')
+            console.log(response.data);
+
+            yield put({type: 'SET_FAV', payload: response.data })
+            
+
+        } catch (error){
+            console.log('error in fav PUT request', error);
+            
+        }
+    }
+
  function* watcherSaga(){
         yield takeEvery('SEARCH_GIFS', fetchGifs);
+        yield takeEvery('SET_FAV', favGifs )
         yield takeEvery('FETCH_CATEGORIES', fetchCategories)
+
     }
 
 
@@ -65,7 +81,6 @@ const sagaMiddleware = createSagaMiddleware();
 //add reducers
 const storeInstance = createStore(
     combineReducers({
-
         search,
         categoriesReducer
 
