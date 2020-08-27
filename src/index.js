@@ -14,7 +14,7 @@ const random = (state = {}, action) => {
 
 }
 
-const search = (state = '', action) => {
+const search = (state = [], action) => {
     if(action.type === 'SET_GIF') {
         return action.payload;
     }
@@ -34,8 +34,23 @@ function* fetchGifs(action){
     }
     }
 
+    function* favGifs(action){
+        try{
+            let response = yield axios.post('/api/favorite')
+            console.log(response.data);
+
+            yield put({type: 'SET_FAV', payload: response.data })
+            
+
+        } catch (error){
+            console.log('error in fav PUT request', error);
+            
+        }
+    }
+
  function* watcherSaga(){
         yield takeEvery('SEARCH_GIFS', fetchGifs);
+        yield takeEvery('SET_FAV', favGifs )
     }
 
 
@@ -44,6 +59,7 @@ const sagaMiddleware = createSagaMiddleware();
 //add reducers
 const storeInstance = createStore(
     combineReducers({
+        search
         
     }),
     applyMiddleware(sagaMiddleware, logger),
@@ -51,4 +67,4 @@ const storeInstance = createStore(
 
 
 sagaMiddleware.run(watcherSaga);
-ReactDOM.render(<App />, document.getElementById('react-root'));
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('react-root'));
