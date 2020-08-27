@@ -17,7 +17,7 @@ class SearchView extends Component {
 
     }
 
-    handleFavGif = (response) => {
+    handleGifSearch = (response) => {
         console.log('Fav gif ');
         // Dispatch goes here to SAGA w/Search value
         this.props.dispatch({ type: 'SEARCH_GIFS', payload: this.state.search });
@@ -27,9 +27,9 @@ class SearchView extends Component {
         return(
             <>
             <div>
-                <input type="search" placeholder='Search Gif' onChange={this.handleSearchChange}/>
+                <input type="text" placeholder='Search Gif' onChange={this.handleSearchChange}/>
 
-                <button onClick={this.handleFavGif}>Fav Gif</button>
+                <button onClick={this.handleGifSearch}>Fav Gif</button>
 
             </div>
 

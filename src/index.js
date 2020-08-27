@@ -14,7 +14,7 @@ const random = (state = {}, action) => {
 
 }
 
-const search = (state = '', action) => {
+const search = (state = [], action) => {
     if(action.type === 'SET_GIF') {
         return action.payload;
     }
@@ -25,7 +25,8 @@ const search = (state = '', action) => {
 
 function* fetchGifs(action){
     try{
-        let response = yield axios.get('/api/category')
+        console.log(action.payload)
+        let response = yield axios.get('/api/search/', action.payload)
         console.log(response.data);
 
         yield put({type: 'SET_GIF', payload: response.data})
@@ -44,6 +45,7 @@ const sagaMiddleware = createSagaMiddleware();
 //add reducers
 const storeInstance = createStore(
     combineReducers({
+        search
         
     }),
     applyMiddleware(sagaMiddleware, logger),
@@ -51,4 +53,4 @@ const storeInstance = createStore(
 
 
 sagaMiddleware.run(watcherSaga);
-ReactDOM.render(<App />, document.getElementById('react-root'));
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('react-root'));
