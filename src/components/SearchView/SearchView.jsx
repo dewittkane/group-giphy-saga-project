@@ -30,6 +30,7 @@ class SearchView extends Component {
                 <input type="search" placeholder='Search Gif' onChange={this.handleSearchChange}/>
 
                 <button onClick={this.handleFavGif}>Fav Gif</button>
+                
 
             </div>
 

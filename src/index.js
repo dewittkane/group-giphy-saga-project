@@ -21,11 +21,17 @@ const search = (state = '', action) => {
     return state; 
 }
 
+const categories = (state, action) => {
+    if (action.type === 'GET_CATEGORIES') {
+        return action.payload;
+    }
+    return state;
+} 
 
 
 function* fetchGifs(action){
     try{
-        let response = yield axios.get('/api/category')
+        let response = yield axios.get(`/api/search/${action.payload}`)
         console.log(response.data);
 
         yield put({type: 'SET_GIF', payload: response.data})
@@ -51,4 +57,4 @@ const storeInstance = createStore(
 
 
 sagaMiddleware.run(watcherSaga);
-ReactDOM.render(<App />, document.getElementById('react-root'));
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('react-root'));
