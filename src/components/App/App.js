@@ -22,7 +22,7 @@ class App extends Component {
           </ul>
         </div>
         
-        <Route path="/" component={SearchView} />
+        <Route exact path="/" component={SearchView} />
         <Route path="/favorites" component={Favorites} />
 
       </Router>

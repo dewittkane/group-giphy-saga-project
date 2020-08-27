@@ -11,7 +11,7 @@ import axios from 'axios';
 
 
 const random = (state = {}, action) => {
-
+    return state
 }
 
 const search = (state = '', action) => {
@@ -21,8 +21,8 @@ const search = (state = '', action) => {
     return state; 
 }
 
-const categories = (state, action) => {
-    if (action.type === 'GET_CATEGORIES') {
+const categoriesReducer = (state = [], action) => {
+    if (action.type === 'SET_CATEGORIES') {
         return action.payload;
     }
     return state;
@@ -38,10 +38,22 @@ function* fetchGifs(action){
     } catch (error){
         console.log('error in get request', error)
     }
+}
+
+function* fetchCategories(){
+    try{
+        let response = yield axios.get('/api/category/')
+        console.log(response.data);
+
+        yield put({type: 'SET_CATEGORIES', payload: response.data})
+    } catch (error){
+        console.log('error in fetch categories request', error)
     }
+}
 
  function* watcherSaga(){
         yield takeEvery('SEARCH_GIFS', fetchGifs);
+        yield takeEvery('FETCH_CATEGORIES', fetchCategories)
     }
 
 
@@ -50,11 +62,12 @@ const sagaMiddleware = createSagaMiddleware();
 //add reducers
 const storeInstance = createStore(
     combineReducers({
-        
+        search,
+        categoriesReducer
     }),
     applyMiddleware(sagaMiddleware, logger),
 );
 
-
 sagaMiddleware.run(watcherSaga);
+
 ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('react-root'));

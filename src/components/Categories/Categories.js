@@ -10,8 +10,8 @@ class Categories extends Component {
     render() {
         return(
             <>
-            {this.props.reduxState.categories.map(category => (
-                <button>Category Name</button>
+            {this.props.reduxState.categoriesReducer.map(category => (
+                <button key={category.id}>{category.name}</button>
             ))}
             </>
         );
