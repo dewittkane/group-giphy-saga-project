@@ -11,7 +11,6 @@ import axios from 'axios';
 
 
 const random = (state = {}, action) => {
-
 }
 
 const search = (state = '', action) => {
@@ -21,7 +20,12 @@ const search = (state = '', action) => {
     return state; 
 }
 
-
+const favoriteImages = (state = {}, action) => {
+    if(action.type === 'FETCH_IMAGES') {
+        return action.payload;
+    }
+    return state;
+}
 
 function* fetchGifs(action){
     try{
@@ -44,6 +48,7 @@ const sagaMiddleware = createSagaMiddleware();
 //add reducers
 const storeInstance = createStore(
     combineReducers({
+        favoriteImages
         
     }),
     applyMiddleware(sagaMiddleware, logger),
@@ -51,4 +56,4 @@ const storeInstance = createStore(
 
 
 sagaMiddleware.run(watcherSaga);
-ReactDOM.render(<App />, document.getElementById('react-root'));
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('react-root'));
