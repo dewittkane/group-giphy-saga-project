@@ -33,7 +33,8 @@ class SearchView extends Component {
         return(
             <>
             <div>
-            <input type="search" placeholder='Search Gif' onChange={this.handleSearchChange}/>
+
+            <input type="text" placeholder='Search Gif' onChange={this.handleSearchChange}/>
             <button onClick={this.handleGifSearch}>Search</button>
                 {/* Display to DOM */}
                 {this.props.reduxState.search.map((newGif) => {
@@ -45,6 +46,7 @@ class SearchView extends Component {
                     )
 
                 })}
+
 
             </div>
 
