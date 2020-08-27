@@ -1,22 +1,48 @@
 import React, { Component } from 'react';
-import './App.css';
-import {connect} from "react-redux";
-//import createSagaMiddleware from 'redux-saga'
+import { connect } from 'react-redux';
 
-class App extends Component {
+class SearchView extends Component {
 
-return(
+    state = {
+        search: '',
+    }
 
-    componentDidMount = () => {
-        this.searchGifs();
-      }
-    
-      searchGifs = () => {
-        this.props.dispatch({ type: 'SEARCH_GIFS'})
-      }
-    
+    handleSearchChange = (event) => {
+        console.log('event happened');
+        // configure search here
 
-)
+        this.setState({
+            search: event.target.value,
+        });
 
+    }
+
+    handleFavGif = (response) => {
+        console.log('Fav gif ');
+        // Dispatch goes here to SAGA w/Search value
+        this.props.dispatch({ type: 'SEARCH_GIFS', payload: this.state.search });
+    }
+
+    render(){
+        return(
+            <>
+            <div>
+                <input type="search" placeholder='Search Gif' onChange={this.handleSearchChange}/>
+
+                <button onClick={this.handleFavGif}>Fav Gif</button>
+
+            </div>
+
+
+            </>
+        )
+    }
 }
-export default connect(mapPropsToState)(App);
+
+const mapStateToProps = (reduxState) => {
+    return{
+        reduxState
+    }
+}
+
+export default connect(mapStateToProps)(SearchView);
