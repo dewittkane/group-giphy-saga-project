@@ -10,15 +10,19 @@ import logger from 'redux-logger';
 import axios from 'axios';
 
 
-const random = (state = {}, action) => {
-    return state
-}
-
 const search = (state = [], action) => {
     if(action.type === 'SET_GIF') {
         return action.payload.data;
     }
     return state; 
+}
+
+
+const favoriteImages = (state = {}, action) => {
+    if(action.type === 'FETCH_IMAGES') {
+        return action.payload;
+    }
+    return state;
 }
 
 const categoriesReducer = (state = [], action) => {
@@ -81,6 +85,7 @@ const sagaMiddleware = createSagaMiddleware();
 //add reducers
 const storeInstance = createStore(
     combineReducers({
+        favoriteImages,
         search,
         categoriesReducer
 
