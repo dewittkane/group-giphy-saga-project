@@ -16,7 +16,7 @@ const random = (state = {}, action) => {
 
 const search = (state = [], action) => {
     if(action.type === 'SET_GIF') {
-        return action.payload;
+        return action.payload.data;
     }
     return state; 
 }

@@ -1,11 +1,10 @@
-require('dotenv').config();
+
 const axios = require('axios');
 const express = require('express');
-
-
 const router = express.Router();
+require('dotenv').config();
 
-router.get('/search', (req, res) => {
+router.get('/', (req, res) => {
     // return all categories
     let search = req.body;
     console.log(search);
