@@ -18,7 +18,7 @@ const search = (state = [], action) => {
 }
 
 
-const favoriteImages = (state = {}, action) => {
+const favoriteImages = (state = [], action) => {
     if(action.type === 'FETCH_IMAGES') {
         return action.payload;
     }
@@ -72,10 +72,24 @@ function* fetchCategories(){
         }
     }
 
+    function* addCategory(action){
+        try{
+            yield axios.put(`/api/favorite/${action.payload.id}`, action.payload.catId)
+
+            yield put({type: 'FETCH_FAVS' })
+            
+
+        } catch (error){
+            console.log('error in fav PUT request', error);
+            
+        }
+    }
+
  function* watcherSaga(){
         yield takeEvery('SEARCH_GIFS', fetchGifs);
         yield takeEvery('SET_FAV', favGifs )
-        yield takeEvery('FETCH_CATEGORIES', fetchCategories)
+        yield takeEvery('FETCH_CATEGORIES', fetchCategories),
+        yield takeEvery('ADD_CATEGORY', addCategory)
 
     }
 
