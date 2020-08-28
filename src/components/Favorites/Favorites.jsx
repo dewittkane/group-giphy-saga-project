@@ -5,11 +5,11 @@ import Categories from '../Categories/Categories.js'
 class Favorites extends Component {
 
     componentDidMount() {
-        // use component did mount to dispatch an action to request the plantList from the API
+        // use component did mount to dispatch an action to request from the API
         this.getImages();
     }
 
-    getImages() {
+    getImages = () => {
         this.props.dispatch({type: 'FETCH_IMAGES'})
     }
     
@@ -17,8 +17,8 @@ class Favorites extends Component {
         return(
             <div>
                 <Categories />
-                {this.props.reduxState.favorites.map((favoriteImages) => {
-                   return <p>key={favoriteImages.id}>{favoriteImages}</p>
+                {this.props.reduxState.favoriteImages.map((favImages) => {
+                   return <p>key={favImages.id}>{favImages}</p>
                 })}
                   <pre>{JSON.stringify(this.props.reduxState)}</pre>
             </div>
