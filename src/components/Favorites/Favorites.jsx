@@ -12,12 +12,15 @@ class Favorites extends Component {
     getImages = () => {
         this.props.dispatch({type: 'FETCH_IMAGES'})
     }
+    
     render() {
         return(
             <div>
                 <Categories />
+
                 {this.props.reduxState.favoriteImages.map((favImages) => {
                    return <p>key={favImages.id}>{favImages}</p>
+
                 })}
                   <pre>{JSON.stringify(this.props.reduxState)}</pre>
             </div>
