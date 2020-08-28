@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Categories from '../Categories/Categories.js'
 
 class Favorites extends Component {
+
     componentDidMount() {
         // use component did mount to dispatch an action to request the plantList from the API
         this.getImages();

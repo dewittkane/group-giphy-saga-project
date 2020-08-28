@@ -10,15 +10,13 @@ import logger from 'redux-logger';
 import axios from 'axios';
 
 
-const random = (state = {}, action) => {
-}
-
-const search = (state = '', action) => {
+const search = (state = [], action) => {
     if(action.type === 'SET_GIF') {
-        return action.payload;
+        return action.payload.data;
     }
     return state; 
 }
+
 
 const favoriteImages = (state = {}, action) => {
     if(action.type === 'FETCH_IMAGES') {
@@ -27,19 +25,58 @@ const favoriteImages = (state = {}, action) => {
     return state;
 }
 
+const categoriesReducer = (state = [], action) => {
+    if (action.type === 'SET_CATEGORIES') {
+        return action.payload;
+    }
+    return state;
+} 
+
+
 function* fetchGifs(action){
     try{
-        let response = yield axios.get('/api/category')
+
+        console.log(action.payload)
+        let response = yield axios.get('/api/search/', action.payload)
+        
         console.log(response.data);
 
         yield put({type: 'SET_GIF', payload: response.data})
     } catch (error){
         console.log('error in get request', error)
     }
+}
+
+function* fetchCategories(){
+    try{
+        let response = yield axios.get('/api/category/')
+        console.log(response.data);
+
+        yield put({type: 'SET_CATEGORIES', payload: response.data})
+    } catch (error){
+        console.log('error in fetch categories request', error)
+    }
+}
+
+    function* favGifs(action){
+        try{
+            let response = yield axios.post('/api/favorite')
+            console.log(response.data);
+
+            yield put({type: 'SET_FAV', payload: response.data })
+            
+
+        } catch (error){
+            console.log('error in fav PUT request', error);
+            
+        }
     }
 
  function* watcherSaga(){
         yield takeEvery('SEARCH_GIFS', fetchGifs);
+        yield takeEvery('SET_FAV', favGifs )
+        yield takeEvery('FETCH_CATEGORIES', fetchCategories)
+
     }
 
 
@@ -48,12 +85,14 @@ const sagaMiddleware = createSagaMiddleware();
 //add reducers
 const storeInstance = createStore(
     combineReducers({
-        favoriteImages
-        
+        favoriteImages,
+        search,
+        categoriesReducer
+
     }),
     applyMiddleware(sagaMiddleware, logger),
 );
 
-
 sagaMiddleware.run(watcherSaga);
+
 ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('react-root'));
