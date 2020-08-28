@@ -12,6 +12,7 @@ class Favorites extends Component {
     getImages() {
         this.props.dispatch({type: 'FETCH_IMAGES'})
     }
+    
     render() {
         return(
             <div>
