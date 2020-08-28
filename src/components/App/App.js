@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import SearchView from '../SearchView/SearchView';
 import Favorites from '../Favorites/Favorites.jsx'
-import {connect} from "react-redux";
 import { HashRouter as Router, Route, Link } from 'react-router-dom'
 
 

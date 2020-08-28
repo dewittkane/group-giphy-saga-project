@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
                    JOIN "category" 
                    ON "favorites".category_id = "category".id`;
   pool.query(queryText)
-  .then((response) => {res.send(result.rows)})
+  .then((response) => {res.send(response.rows)})
   .catch((error) => {
     console.log('error in get', error);
     res.sendStatus(500);
