@@ -24,7 +24,7 @@ class SearchView extends Component {
 
     handleFavGif = (gifId) => {
         console.log('in handleFavGif');
-
+        console.log(gifId);
         this.props.dispatch({ type: 'SET_FAV', payload: gifId }) // need images still 
     }
 

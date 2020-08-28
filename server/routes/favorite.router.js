@@ -5,11 +5,13 @@ const router = express.Router();
 
 // return all favorite images
 router.get('/', (req, res) => {
-  let queryText = `SELECT * FROM "favorites"
-                   JOIN "category" 
+  let queryText = `SELECT "favorites".*, "category".name FROM "favorites"
+                   LEFT JOIN "category" 
                    ON "favorites".category_id = "category".id`;
   pool.query(queryText)
-  .then((response) => {res.send(response.rows)})
+  .then((response) => {
+    console.log(response);
+    res.send(response.rows)})
   .catch((error) => {
     console.log('error in get', error);
     res.sendStatus(500);
@@ -18,14 +20,15 @@ router.get('/', (req, res) => {
 
 // add a new favorite 
 router.post('/', (req, res) => {
-  res.sendStatus(200);
 
-  let newFav = req.body;
+  console.log(req.body.url);
+  
+  let newFav = req.body.url;
   const queryText = `INSERT INTO "favorites" ("image_url")
   VALUES ($1)`;
 
   const queryValues = [
-    newFav.image_url
+    newFav
   ]
   pool.query(queryText, queryValues).then(() => {res.sendStatus(201); }).catch((error) => {
     console.log('Error completing favorite query', error);

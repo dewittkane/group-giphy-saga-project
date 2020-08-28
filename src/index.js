@@ -40,11 +40,8 @@ function* favGetGifs(){
          
         let response = yield axios.get('/api/favorite')
         console.log(response.data);
-
         yield put({type: 'GET_FAV', payload: response.data })
         
-        
-
     } catch (error) {
         console.log('error in GET favGetGifs!', error);
         
@@ -79,7 +76,9 @@ function* fetchCategories(){
 
     function* favGifs(action){
         try{
-            yield axios.post('/api/favorite', action.payload)
+            console.log(action.payload);
+            
+            yield axios.post('/api/favorite', {url: action.payload})
            
 
             yield put({type: 'FETCH_IMAGES'})
