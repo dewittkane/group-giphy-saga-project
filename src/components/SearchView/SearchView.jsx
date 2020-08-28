@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 
 class SearchView extends Component {
     state = {
@@ -28,6 +29,8 @@ class SearchView extends Component {
         this.props.dispatch({ type: 'SET_FAV', payload: gifId }) // need images still 
     }
 
+    
+
     render(){
         return(
             <>
@@ -37,7 +40,7 @@ class SearchView extends Component {
                 {this.props.reduxState.search.map((newGif) => {
                     return(
                         <div>
-                            <img />
+                            <img src={this.data.data.image_original_url}/>
                             <button onClick={() => this.handleFavGif(newGif.id)} >Fav Gif</button>
                         </div>
                     )
