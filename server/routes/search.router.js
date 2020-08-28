@@ -3,9 +3,9 @@ const express = require('express');
 const router = express.Router();
 require('dotenv').config();
 
-router.get('/', (req, res) => {
+router.get('/:searchQuery', (req, res) => {
     // return all categories
-    let search = req.body;
+    let search = req.params.searchQuery;
     console.log(search);
   
     axios.get(`http://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_KEY}&q=${search}&limit=3`)

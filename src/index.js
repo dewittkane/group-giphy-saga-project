@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App/App.js';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -40,11 +40,8 @@ function* favGetGifs(){
          
         let response = yield axios.get('/api/favorite')
         console.log(response.data);
-
         yield put({type: 'GET_FAV', payload: response.data })
         
-        
-
     } catch (error) {
         console.log('error in GET favGetGifs!', error);
         
@@ -56,7 +53,7 @@ function* fetchGifs(action){
     try{
 
         console.log(action.payload)
-        let response = yield axios.get('/api/search/', action.payload)
+        let response = yield axios.get(`/api/search/${action.payload}`)
         
         console.log(response.data);
 
@@ -79,7 +76,9 @@ function* fetchCategories(){
 
     function* favGifs(action){
         try{
-            let response = yield axios.post('/api/favorite', action.payload)
+            console.log(action.payload);
+            
+            yield axios.post('/api/favorite', {url: action.payload})
            
 
             yield put({type: 'FETCH_IMAGES'})
