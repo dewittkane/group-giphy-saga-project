@@ -23,10 +23,10 @@ class SearchView extends Component {
         this.props.dispatch({ type: 'SEARCH_GIFS', payload: this.state.search });
     }
 
-    handleFavGif = (gifId) => {
+    handleFavGif = (gifUrl) => {
         console.log('in handleFavGif');
 
-        this.props.dispatch({ type: 'SET_FAV', payload: gifId }) // need images still 
+        this.props.dispatch({ type: 'SET_FAV', payload: gifUrl }) // need images still 
     }
 
     
@@ -38,10 +38,11 @@ class SearchView extends Component {
             <button onClick={this.handleGifSearch}>Search</button>
                 {/* Display to DOM */}
                 {this.props.reduxState.search.map((newGif) => {
+                    console.log(newGif);
                     return(
                         <div>
-                            <img src={this.data.data.image_original_url}/>
-                            <button onClick={() => this.handleFavGif(newGif.id)} >Fav Gif</button>
+                            <img src={newGif.images.original.url}/>
+                            <button onClick={() => this.handleFavGif(newGif.images.original.url)} >Fav Gif</button>
                         </div>
                     )
                 })}

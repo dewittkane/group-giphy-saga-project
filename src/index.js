@@ -56,7 +56,7 @@ function* fetchGifs(action){
     try{
 
         console.log(action.payload)
-        let response = yield axios.get('/api/search/', action.payload)
+        let response = yield axios.post('/api/search/', {key: action.payload})
         
         console.log(response.data);
 
