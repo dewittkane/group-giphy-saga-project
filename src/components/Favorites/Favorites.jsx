@@ -17,8 +17,10 @@ class Favorites extends Component {
         return(
             <div>
                 <Categories />
+
                 {this.props.reduxState.favoriteImages.map((favImages) => {
                    return <p>key={favImages.id}>{favImages}</p>
+
                 })}
                   <pre>{JSON.stringify(this.props.reduxState)}</pre>
             </div>

@@ -17,6 +17,7 @@ INSERT INTO "favorites" ("image_url") VALUES ('https://media.giphy.com/media/1UN
 INSERT INTO "favorites" ("image_url") VALUES ('https://media.giphy.com/media/icUEIrjnUuFCWDxFpU/giphy.gif');
 INSERT INTO "favorites" ("image_url") VALUES ('https://media.giphy.com/media/26FmRo4Hmxw3dQrhC/giphy.gif');
 
+
 SELECT * FROM "favorites" JOIN "category" ON "favorites".category_id = "category".id
 
 
